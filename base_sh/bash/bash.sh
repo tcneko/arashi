@@ -21,16 +21,17 @@ set_alias() {
 }
 
 set_color() {
-  cat /etc/skel/.bashrc | grep 'export TERM=xterm-256color' &>/dev/null
+  cat /etc/skel/.bashrc | grep 'arashi/bash/bash.sh' &>/dev/null
   if [[ $? -ne 0 ]]; then
+    sed -i '/add by arashi bash.sh/,/end by arashi bash.sh/d' /etc/skel/.bashrc
+  fi
     cat >>/etc/skel/.bashrc <<EOF
-
-# added by arashi/bash/bash.sh
+# add by arashi bash.sh
 if [ "$TERM" == "xterm" ]; then
     export TERM=xterm-256color
 fi
+# end by arashi bash.sh
 EOF
-  fi
 }
 
 main() {

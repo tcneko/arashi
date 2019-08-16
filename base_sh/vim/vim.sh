@@ -15,7 +15,7 @@ git_dir='/opt/git'
 set_vimrc() {
   git clone --depth=1 https://github.com/amix/vimrc.git ${git_dir}/vim_runtime
   bash ${git_dir}/vim_runtime/install_awesome_parameterized.sh ${git_dir}/vim_runtime root
-  cp /root/.vimrc /etc/skel/
+  cp -f /root/.vimrc /etc/skel/
 }
 
 main() {

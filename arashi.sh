@@ -8,7 +8,8 @@
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 
 # variables
-cfg_file='arashi_cfg.sh'
+cur_dir="$(dirname ${BASH_SOURCE[0]})"
+cfg_file="${cur_dir}/arashi_cfg.sh"
 export_func_s=('echo_info' 'echo_warning' 'echo_error' 'echo_exit' 'request_input' 'safe_exit')
 export_var_s=('flag_tmp_dir' 'tmp_dir')
 
@@ -63,7 +64,7 @@ load_cfg() {
   fi
 }
 
-create_tmp_dir() {
+mk_tmp_dir() {
   flag_tmp_dir=0
   tmp_dir=$(mktemp -d)
 }

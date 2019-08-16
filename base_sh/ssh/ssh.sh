@@ -9,7 +9,7 @@
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 
 # variables
-cfg_file="$(dirname ${BASH_SOURCE[0]})/sudo_cfg.sh"
+cfg_file="$(dirname ${BASH_SOURCE[0]})/ssh_cfg.sh"
 
 # function
 load_cfg() {

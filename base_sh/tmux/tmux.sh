@@ -23,16 +23,17 @@ install_tmux_conf() {
 }
 
 set_auto_start() {
-  cat /etc/skel/.bashrc | grep 'tmux new -s rena' &>/dev/null
+  cat /etc/skel/.bashrc | grep 'arashi/tmux/tmux.sh' &>/dev/null
   if [[ $? -ne 0 ]]; then
-    cat >>/etc/skel/.bashrc <<EOF
-
-# added by arashi/tmux/tmux.sh
+    sed -i '/add by arashi tmux.sh/,/end by arashi tmux.sh/d' /etc/skel/.bashrc
+  fi
+  cat >>/etc/skel/.bashrc <<EOF
+# add by arashi tmux.sh
 if command -v tmux &> /dev/null && [ -z "\$TMUX" ]; then
     tmux attach -t rena || tmux new -s rena
 fi
+# end by arashi tmux.sh
 EOF
-  fi
 }
 
 main() {

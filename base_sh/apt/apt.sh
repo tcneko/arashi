@@ -20,7 +20,7 @@ load_cfg() {
 }
 
 apt_upgrade() {
-  if [[ flag_apt_upgrade -eq '0' ]]; then
+  if [[ ${flag_apt_upgrade} -eq '0' ]]; then
     apt upgrade -y
   fi
 }
