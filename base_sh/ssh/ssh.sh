@@ -26,14 +26,14 @@ load_cfg() {
 disable_root() {
   grep '^[[:space:]]*PermitRootLogin no' ${cfg_sshd} &>/dev/null
   if [[ $? -ne 0 && ${flag_disable_root} -eq 0 ]]; then
-    sed -Ei '/^#*[[:space:]]*PermitRootLogin (yes|no|without-password|prohibit-password)[[:space:]]*$/s/.*/PermitRootLogin no/g' ${cfg_sshd}
+    sed -Ei 's/^#*[[:space:]]*PermitRootLogin (yes|no|without-password|prohibit-password)[[:space:]]*$/PermitRootLogin no/g' ${cfg_sshd}
   fi
 }
 
 disable_pass() {
   grep '^[[:space:]]*PasswordAuthentication no' ${cfg_sshd} &>/dev/null
   if [[ $? -ne 0 && ${flag_disable_pass} -eq 0 ]]; then
-    sed -Ei '/^#*[[:space:]]*PasswordAuthentication (no|yes)[[:space:]]*$/s/.*/PasswordAuthentication no/g' ${cfg_sshd}
+    sed -Ei 's/^#*[[:space:]]*PasswordAuthentication (no|yes)[[:space:]]*$/PasswordAuthentication no/g' ${cfg_sshd}
   fi
 }
 
@@ -71,6 +71,13 @@ sshd:all:deny
 # end by arashi ssh.sh limit_ip
 EOF
     fi
+  fi
+}
+
+change_port() {
+  if [[ -n ${sshd_port} ]]; then
+    sed -Ei '/^#*[[:space:]]*Port [0-9]{1,5}$/s/^#[[:space:]]*Port/Port/g' ${cfg_sshd}
+    sed -Ei "s/^Port [0-9]{1,5}$/Port ${sshd_port}/g" ${cfg_sshd}
   fi
 }
 

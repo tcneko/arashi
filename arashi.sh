@@ -105,8 +105,8 @@ main() {
   load_cfg
   mk_lt_dir
   export_func_a_var
-  run_sh base_sh
-  run_sh ext_sh
+  run_sh "${cur_dir}/base_sh"
+  run_sh "${cur_dir}/ext_sh"
   safe_exit
 }
 
