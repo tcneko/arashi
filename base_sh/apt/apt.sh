@@ -37,6 +37,12 @@ apt_diable() {
   done
 }
 
+apt_remove() {
+  for apt_diable in ${apt_diable_s[@]}; do
+    apt disable -y ${apt_install}
+  done
+}
+
 main() {
   apt_upgrade
   apt_install

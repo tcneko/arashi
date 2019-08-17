@@ -10,6 +10,7 @@ export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 
 # variables
 cur_dir="$(dirname ${BASH_SOURCE[0]})"
+cfg_sudo='/etc/sudoers'
 cfg_file="${cur_dir}/sudo_cfg.sh"
 
 # function
@@ -23,26 +24,42 @@ load_cfg() {
 
 rm_user() {
   for user in ${rm_user_s}; do
-    sed -i "/^${user}/s/^/#/g" /etc/sudoers
+    sed -Ei "/^[[:space:]]*${user}/s/^/#/g" ${cfg_sudo}
   done
 }
 
 rm_group() {
   for group in ${rm_group_s}; do
-    sed -i "/^%${group}/s/^/#/g" /etc/sudoers
+    sed -Ei "/^[[:space:]]*%${group}/s/^/#/g" ${cfg_sudo}
   done
 }
 
 add_user() {
-  for user in ${add_user_s}; do
-    echo "${user} ALL=(ALL:ALL) NOPASSWD: ALL" >>/etc/sudoers
-  done
+  if [[ -n ${add_user_s[@]} ]]; then
+    cat ${cfg_hosts_allow} | grep 'add by arashi sudo.sh add_user' &>/dev/null
+    if [[ $? -eq 0 ]]; then
+      sed -Ei '/add by arashi sudo.sh add_user/,/end by arashi sudo.sh add_user/d' ${cfg_hosts_allow}
+    fi
+    echo 'add by arashi sudo.sh add_user' >>${cfg_sudo}
+    for user in ${add_user_s}; do
+      echo "${user} ALL=(ALL:ALL) NOPASSWD: ALL" >>${cfg_sudo}
+    done
+    echo 'end by arashi sudo.sh add_user' >>${cfg_sudo}
+  fi
 }
 
 add_group() {
-  for group in ${add_group_s}; do
-    echo "%${group} ALL=(ALL:ALL) NOPASSWD: ALL" >>/etc/sudoers
-  done
+  if [[ -n ${add_group_s[@]} ]]; then
+    cat ${cfg_hosts_allow} | grep 'add by arashi sudo.sh add_group' &>/dev/null
+    if [[ $? -eq 0 ]]; then
+      sed -Ei '/add by arashi sudo.sh add_group/,/end by arashi sudo.sh add_group/d' ${cfg_hosts_allow}
+    fi
+    echo 'add by arashi sudo.sh add_group' >>${cfg_sudo}
+    for group in ${add_group_s}; do
+      echo "%${group} ALL=(ALL:ALL) NOPASSWD: ALL" >>${cfg_sudo}
+    done
+    echo 'end by arashi sudo.sh add_group' >>${cfg_sudo}
+  fi
 }
 
 main() {
