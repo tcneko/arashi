@@ -7,4 +7,4 @@ base_id_sys=5000
 
 nor_user_s=('')
 sys_user_s=('')
-nor_user_pass_s['']=''
+nor_user_pass_s['foo']='bar'

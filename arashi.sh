@@ -86,14 +86,14 @@ export_func_a_var() {
 
 run_sh() {
   for sh in $(eval echo \${${1}_s[@]}); do
-    if [[ -r "$1/${sh}/${sh}.sh" ]]; then
+    if [[ -r "${cur_dir}/$1/${sh}/${sh}.sh" ]]; then
       echo_info "Run script \"$1/${sh}/${sh}.sh\""
-      bash "$1/${sh}/${sh}.sh"
+      bash "${cur_dir}/$1/${sh}/${sh}.sh"
       if [[ $? -ne 0 ]]; then
-        echo_warning "\"$1/${sh}/${sh}.sh\" return value is not equal to 0"
+        echo_warning "\"${cur_dir}/$1/${sh}/${sh}.sh\" return value is not equal to 0"
       fi
     else
-      echo_warning "Skip script \"$1/${sh}/${sh}.sh\""
+      echo_warning "Skip script \"${cur_dir}/$1/${sh}/${sh}.sh\""
     fi
   done
 }
@@ -105,8 +105,8 @@ main() {
   load_cfg
   mk_lt_dir
   export_func_a_var
-  run_sh "${cur_dir}/base_sh"
-  run_sh "${cur_dir}/ext_sh"
+  run_sh base_sh
+  run_sh ext_sh
   safe_exit
 }
 
