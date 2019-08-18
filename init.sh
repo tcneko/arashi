@@ -11,6 +11,9 @@ export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 install_dir='/opt/sh/arashi'
 
 # function
+echo_info() {
+  echo -e "\e[1;32m[Info]\e[0m $@"
+}
 
 # main
 if [ $(id -u) -ne 0 ]; then
@@ -20,12 +23,12 @@ fi
 
 if [ ! -d ${install_dir} ]; then
   mkdir -p ${install_dir}
+  mkdir ${install_dir}/ext_sh
 fi
 cp -rf *.sh base_sh ${install_dir}
-mkdir ${install_dir}/ext_sh
 chmod +x ${install_dir}/arashi.sh
 
-echo 'Init succeeded if no error is reported above'
-echo "Please run \"bash ${install_dir}/arashi.sh\" as root"
+echo_info 'Init succeeded if no error is reported above'
+echo_info "Please run : sudo bash ${install_dir}/arashi.sh"
 
 exit 0

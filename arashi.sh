@@ -70,8 +70,8 @@ mk_tmp_dir() {
 }
 
 mk_lt_dir() {
-  for dir in ${dir_s}; do
-    mkdir -p ${dir}
+  for lt_dir in ${lt_dir_s}; do
+    mkdir -p ${lt_dir}
   done
 }
 
