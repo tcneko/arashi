@@ -70,16 +70,16 @@ mk_tmp_dir() {
 }
 
 mk_lt_dir() {
-  for lt_dir in ${lt_dir_s}; do
+  for lt_dir in ${lt_dir_s[@]}; do
     mkdir -p ${lt_dir}
   done
 }
 
 export_func_a_var() {
-  for export_func in ${export_func_s}; do
+  for export_func in ${export_func_s[@]}; do
     export -f ${export_func}
   done
-  for export_var in ${export_var_s}; do
+  for export_var in ${export_var_s[@]}; do
     export ${export_var}
   done
 }

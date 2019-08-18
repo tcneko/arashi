@@ -21,6 +21,12 @@ load_cfg() {
   fi
 }
 
+set_flag_retrun() {
+  if [[ $? -eq 0 ]]; then
+    flag_retrun=0
+  fi
+}
+
 add_user_c() {
   id_add=$(echo -n $1 | md5sum | sed 's/[^0-9]//g;s/.*\(...\)$/\1/')
   case $2 in
@@ -35,16 +41,16 @@ add_user_c() {
   flag_retrun=1
   # uid
   cat /etc/passwd | cut -d: -f3 | grep ${id} &>/dev/null
-  flag_retrun=0
+  set_flag_retrun
   # username
   cat /etc/passwd | cut -d: -f1 | grep -E "^$1$" &>/dev/null
-  flag_retrun=0
+  set_flag_retrun
   # gid
   cat /etc/group | cut -d: -f3 | grep ${id} &>/dev/null
-  flag_retrun=0
+  set_flag_retrun
   # groupname
   cat /etc/group | cut -d: -f1 | grep -E "^$1$" &>/dev/null
-  flag_retrun=0
+  set_flag_retrun
   if [[ ${flag_retrun} -eq 0 ]]; then
     echo_warning "Skip add user ${1}"
     return 1

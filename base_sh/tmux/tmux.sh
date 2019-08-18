@@ -13,7 +13,11 @@ git_dir='/opt/git'
 
 # function
 install_tmux_conf() {
-  git clone https://github.com/gpakosz/.tmux.git ${git_dir}/tmux_theme
+  if [[ -d "${git_dir}/tmux_theme" ]]; then
+    git -C "${git_dir}/tmux_theme" pull
+  else
+    git clone https://github.com/gpakosz/.tmux.git ${git_dir}/tmux_theme
+  fi
   cat ${git_dir}/tmux_theme/.tmux.conf | sed -E '/C-a/s/^/###/g' >/etc/skel/.tmux.conf
   cat ${git_dir}/tmux_theme/.tmux.conf.local |
     sed -E 's/^(tmux_conf_theme_.*_separator)/###\1/g;s/^#(tmux_conf_theme_.*_separator)/\1/g' |
