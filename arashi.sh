@@ -10,7 +10,7 @@ export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 # variables
 cur_dir="$(dirname ${BASH_SOURCE[0]})"
 cfg_file="${cur_dir}/arashi_cfg.sh"
-export_func_s=('echo_info' 'echo_warning' 'echo_error' 'echo_exit' 'request_input' 'safe_exit')
+export_func_s=('echo_info' 'echo_warning' 'echo_error' 'echo_exit' 'request_input' 'test_or_mkdir' 'safe_exit')
 export_var_s=('flag_tmp_dir' 'tmp_dir')
 
 # function
@@ -43,6 +43,12 @@ request_input() {
   eval "read -ep '>>> ' $1"
 }
 
+test_or_mkdir() {
+  if [[ ! -d $1 ]]; then
+    mkdir -p $1
+  fi
+}
+
 test_root_exit() {
   if [[ $(id -u) -ne 0 ]]; then
     echo_exit 'Please rerun as root'
@@ -71,7 +77,7 @@ mk_tmp_dir() {
 
 mk_lt_dir() {
   for lt_dir in ${lt_dir_s[@]}; do
-    mkdir -p ${lt_dir}
+    test_or_mkdir ${lt_dir}
   done
 }
 

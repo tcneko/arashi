@@ -57,7 +57,7 @@ limit_ip() {
     if [[ $? -eq 0 ]]; then
       sed -i '/add by arashi ssh.sh limit_ip/,/end by arashi ssh.sh limit_ip/d' ${cfg_hosts_allow}
     fi
-    limit_ip_sp_by_comma=$(echo ${limit_ip_s[@]} | sed 's/ /,/g')
+    limit_ip_sp_by_comma="$(echo ${limit_ip_s[@]} | sed 's/ /,/g')"
     cat >>${cfg_hosts_allow} <<EOF
 # add by arashi ssh.sh limit_ip
 sshd:${limit_ip_sp_by_comma}:allow

@@ -28,7 +28,7 @@ install_tmux_conf() {
 
 set_auto_start() {
   cat /etc/skel/.bashrc | grep 'add by arashi tmux.sh' &>/dev/null
-  if [[ $? -ne 0 ]]; then
+  if [[ $? -eq 0 ]]; then
     sed -i '/add by arashi tmux.sh/,/end by arashi tmux.sh/d' /etc/skel/.bashrc
   fi
   cat >>/etc/skel/.bashrc <<EOF
