@@ -8,12 +8,12 @@
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 
 # variables
-cfg_file="$(dirname ${BASH_SOURCE[0]})/apt_cfg.sh"
+cfg_main="$(dirname ${BASH_SOURCE[0]})/apt_cfg.sh"
 
 # function
 load_cfg() {
-  if [[ -r ${cfg_file} ]]; then
-    source ${cfg_file}
+  if [[ -r ${cfg_main} ]]; then
+    source ${cfg_main}
   else
     exit 1
   fi

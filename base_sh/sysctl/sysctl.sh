@@ -9,26 +9,24 @@
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 
 # variables
-cfg_file="$(dirname ${BASH_SOURCE[0]})/sysctl_cfg.sh"
+cfg_main="$(dirname ${BASH_SOURCE[0]})/sysctl_cfg.sh"
 cfg_sysctl='/etc/sysctl.conf'
 
 # function
 load_cfg() {
-  if [[ -r ${cfg_file} ]]; then
-    source ${cfg_file}
+  if [[ -r ${cfg_main} ]]; then
+    source ${cfg_main}
   else
     exit 1
   fi
 }
 
 enable_forward() {
-  grep -E '^[[:space:]]*net.ipv4.ip_forward=1[[:space:]]*$' ${cfg_sysctl} &>/dev/null
-  if [[ $? -ne 0 && ${flag_enable_forward} -eq 0 ]]; then
-    sed -Ei 's/^#*[[:space:]]*net.ipv4.ip_forward=1[[:space:]]*$/net.ipv4.ip_forward=1/g' ${cfg_sysctl}
+  if [[ ${flag_enable_forward} -eq 0 ]]; then
+    sed -Ei 's/^#*[[:space:]]*net.ipv4.ip_forward=[0-1][[:space:]]*$/net.ipv4.ip_forward=1/g' ${cfg_sysctl}
   fi
-  grep -E '^[[:space:]]*net.ipv6.conf.all.forwarding=1[[:space:]]*$' ${cfg_sysctl} &>/dev/null
-  if [[ $? -ne 0 && ${flag_enable_forward} -eq 0 ]]; then
-    sed -Ei 's/^#*[[:space:]]*net.ipv6.conf.all.forwarding=1[[:space:]]*$/net.ipv6.conf.all.forwarding=1/g' ${cfg_sysctl}
+  if [[ ${flag_enable_forward} -eq 0 ]]; then
+    sed -Ei 's/^#*[[:space:]]*net.ipv6.conf.all.forwarding=[0-1][[:space:]]*$/net.ipv6.conf.all.forwarding=1/g' ${cfg_sysctl}
   fi
 }
 

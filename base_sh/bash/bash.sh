@@ -8,12 +8,12 @@
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 
 # variables
-cur_dir="$(dirname ${BASH_SOURCE[0]})"
+dir_cur="$(dirname ${BASH_SOURCE[0]})"
 
 # function
 set_alias() {
-  cp -f "${cur_dir}/bash_aliases.sh" /etc/skel/.bash_aliases
-  cp -f "${cur_dir}/bash_aliases.sh" /root/.bash_aliases
+  cp -f "${dir_cur}/bash_aliases.sh" /etc/skel/.bash_aliases
+  cp -f "${dir_cur}/bash_aliases.sh" /root/.bash_aliases
 }
 
 set_color() {

@@ -23,7 +23,7 @@ fi
 
 if [ ! -d ${install_dir} ]; then
   mkdir -p ${install_dir}
-  mkdir ${install_dir}/ext_sh
+  mkdir -p ${install_dir}/ext_sh
 fi
 cp -rf *.sh base_sh ${install_dir}
 chmod +x ${install_dir}/arashi.sh

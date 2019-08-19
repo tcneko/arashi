@@ -10,15 +10,15 @@ export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 
 # variables
 dir_cur="$(dirname ${BASH_SOURCE[0]})"
-cfg_file="${dir_cur}/ssh_cfg.sh"
+cfg_main="${dir_cur}/ssh_cfg.sh"
 cfg_sshd='/etc/ssh/sshd_config'
 cfg_hosts_allow='/etc/hosts.allow'
 cfg_hosts_deny='/etc/hosts.deny'
 
 # function
 load_cfg() {
-  if [[ -r ${cfg_file} ]]; then
-    source ${cfg_file}
+  if [[ -r ${cfg_main} ]]; then
+    source ${cfg_main}
   else
     exit 1
   fi
@@ -26,13 +26,13 @@ load_cfg() {
 
 disable_root() {
   if [[ ${flag_disable_root} -eq 0 ]]; then
-    sed -Ei 's/^#*[[:space:]]*PermitRootLogin (yes|no|without-password|prohibit-password)[[:space:]]*$/PermitRootLogin no/g' ${cfg_sshd}
+    sed -Ei 's/^#*[[:space:]]*PermitRootLogin[[:space:]]+(yes|no|without-password|prohibit-password)[[:space:]]*$/PermitRootLogin no/g' ${cfg_sshd}
   fi
 }
 
 disable_pass() {
   if [[ ${flag_disable_pass} -eq 0 ]]; then
-    sed -Ei 's/^#*[[:space:]]*PasswordAuthentication (no|yes)[[:space:]]*$/PasswordAuthentication no/g' ${cfg_sshd}
+    sed -Ei 's/^#*[[:space:]]*PasswordAuthentication[[:space:]]+(no|yes)[[:space:]]*$/PasswordAuthentication no/g' ${cfg_sshd}
   fi
 }
 
@@ -76,8 +76,7 @@ EOF
 
 change_port() {
   if [[ -n ${sshd_port} ]]; then
-    sed -Ei '/^#*[[:space:]]*Port [0-9]{1,5}$/s/^#[[:space:]]*Port/Port/g' ${cfg_sshd}
-    sed -Ei "s/^Port [0-9]{1,5}$/Port ${sshd_port}/g" ${cfg_sshd}
+    sed -Ei "s/^#*[[:space:]]*Port [0-9]{1,5}[[:space:]]*$/Port ${sshd_port}/g" ${cfg_sshd}
   fi
 }
 

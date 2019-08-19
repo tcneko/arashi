@@ -8,8 +8,8 @@
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 
 # variables
-cur_dir="$(dirname ${BASH_SOURCE[0]})"
-cfg_file="${cur_dir}/arashi_cfg.sh"
+dir_cur="$(dirname ${BASH_SOURCE[0]})"
+cfg_file="${dir_cur}/arashi_cfg.sh"
 export_func_s=('echo_info' 'echo_warning' 'echo_error' 'echo_exit' 'request_input' 'test_or_mkdir' 'safe_exit')
 export_var_s=('flag_tmp_dir' 'tmp_dir')
 
@@ -92,14 +92,14 @@ export_func_a_var() {
 
 run_sh() {
   for sh in $(eval echo \${${1}_s[@]}); do
-    if [[ -r "${cur_dir}/$1/${sh}/${sh}.sh" ]]; then
+    if [[ -r "${dir_cur}/$1/${sh}/${sh}.sh" ]]; then
       echo_info "Run script \"$1/${sh}/${sh}.sh\""
-      bash "${cur_dir}/$1/${sh}/${sh}.sh"
+      bash "${dir_cur}/$1/${sh}/${sh}.sh"
       if [[ $? -ne 0 ]]; then
-        echo_warning "\"${cur_dir}/$1/${sh}/${sh}.sh\" return value is not equal to 0"
+        echo_warning "\"${dir_cur}/$1/${sh}/${sh}.sh\" return value is not equal to 0"
       fi
     else
-      echo_warning "Skip script \"${cur_dir}/$1/${sh}/${sh}.sh\""
+      echo_warning "Skip script \"${dir_cur}/$1/${sh}/${sh}.sh\""
     fi
   done
 }

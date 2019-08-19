@@ -9,13 +9,13 @@
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 
 # variables
-cur_dir="$(dirname ${BASH_SOURCE[0]})"
-cfg_file="${cur_dir}/timezone_cfg.sh"
+dir_cur="$(dirname ${BASH_SOURCE[0]})"
+cfg_main="${dir_cur}/timezone_cfg.sh"
 
 # function
 load_cfg() {
-  if [[ -r ${cfg_file} ]]; then
-    source ${cfg_file}
+  if [[ -r ${cfg_main} ]]; then
+    source ${cfg_main}
   else
     exit 1
   fi
