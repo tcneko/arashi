@@ -8,7 +8,7 @@
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 
 # variables
-cfg_file="$(dirname ${BASH_SOURCE[0]})/timezone_cfg.sh"
+cfg_file="$(dirname ${BASH_SOURCE[0]})/apt_cfg.sh"
 
 # function
 load_cfg() {
@@ -44,6 +44,7 @@ apt_remove() {
 }
 
 main() {
+  load_cfg
   apt_upgrade
   apt_install
   apt_diable
