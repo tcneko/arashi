@@ -9,7 +9,8 @@
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 
 # variables
-cfg_file="$(dirname ${BASH_SOURCE[0]})/ssh_cfg.sh"
+dir_cur="$(dirname ${BASH_SOURCE[0]})"
+cfg_file="${dir_cur}/ssh_cfg.sh"
 cfg_sshd='/etc/ssh/sshd_config'
 cfg_hosts_allow='/etc/hosts.allow'
 cfg_hosts_deny='/etc/hosts.deny'
@@ -81,6 +82,21 @@ change_port() {
   fi
 }
 
+add_pubkey() {
+  for pubkey_user in ${pubkey_user_s[@]}; do
+    if [[ -f "${dir_cur}/${pubkey_user}.pub" && ! -f "/home/${pubkey_user}/.ssh/authorized_keys" ]]; then
+      test_or_mkdir "/home/${pubkey_user}/.ssh"
+      chown "${pubkey_user}:" "/home/${pubkey_user}/.ssh"
+      chmod 700 "/home/${pubkey_user}/.ssh"
+      cp "${dir_cur}/${pubkey_user}.pub" "/home/${pubkey_user}/.ssh/authorized_keys"
+      chown "${pubkey_user}:" "/home/${pubkey_user}/.ssh/authorized_keys"
+      chmod 600 "/home/${pubkey_user}/.ssh/authorized_keys"
+    else
+      echo_warning "Skip add user ${1}"
+    fi
+  done
+}
+
 restart_sshd() {
   if [[ ${flag_restart_sshd} -eq 0 ]]; then
     systemctl restart sshd
@@ -93,6 +109,8 @@ main() {
   disable_pass
   limit_user
   limit_ip
+  change_port
+  add_pubkey
   restart_sshd
 }
 
