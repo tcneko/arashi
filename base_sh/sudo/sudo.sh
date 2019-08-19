@@ -23,14 +23,14 @@ load_cfg() {
 }
 
 rm_user() {
-  for user in ${rm_user_s}; do
-    sed -Ei "/^[[:space:]]*${user}/s/^/#/g" ${cfg_sudo}
+  for user in ${rm_user_s[@]}; do
+    sed -Ei "/^[[:space:]]*${user}.*ALL[[:space:]]*$/s/^/#/g" ${cfg_sudo}
   done
 }
 
 rm_group() {
-  for group in ${rm_group_s}; do
-    sed -Ei "/^[[:space:]]*%${group}/s/^/#/g" ${cfg_sudo}
+  for group in ${rm_group_s[@]}; do
+    sed -Ei "/^[[:space:]]*%${group}.*ALL[[:space:]]*$/s/^/#/g" ${cfg_sudo}
   done
 }
 

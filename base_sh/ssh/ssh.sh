@@ -25,15 +25,13 @@ load_cfg() {
 }
 
 disable_root() {
-  grep '^[[:space:]]*PermitRootLogin no' ${cfg_sshd} &>/dev/null
-  if [[ $? -ne 0 && ${flag_disable_root} -eq 0 ]]; then
+  if [[ ${flag_disable_root} -eq 0 ]]; then
     sed -Ei 's/^#*[[:space:]]*PermitRootLogin (yes|no|without-password|prohibit-password)[[:space:]]*$/PermitRootLogin no/g' ${cfg_sshd}
   fi
 }
 
 disable_pass() {
-  grep '^[[:space:]]*PasswordAuthentication no' ${cfg_sshd} &>/dev/null
-  if [[ $? -ne 0 && ${flag_disable_pass} -eq 0 ]]; then
+  if [[ ${flag_disable_pass} -eq 0 ]]; then
     sed -Ei 's/^#*[[:space:]]*PasswordAuthentication (no|yes)[[:space:]]*$/PasswordAuthentication no/g' ${cfg_sshd}
   fi
 }
