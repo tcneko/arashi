@@ -63,7 +63,7 @@ sshd:${limit_ip_sp_by_comma}:allow
 # end by arashi ssh.sh limit_ip
 EOF
     cat ${cfg_hosts_deny} | grep 'add by arashi ssh.sh limit_ip' &>/dev/null
-    if [[ $? -ne 0 ]]; then
+    if [[ $? -eq 0 ]]; then
       sed -i '/add by arashi ssh.sh limit_ip/,/end by arashi ssh.sh limit_ip/d' ${cfg_hosts_deny}
     fi
     cat >>${cfg_hosts_deny} <<EOF
