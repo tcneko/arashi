@@ -39,3 +39,29 @@ alias g='egrep -i --color=auto'
 alias v='vim'
 alias c='clear'
 alias p='pwd'
+
+## tmux
+tmuxa() {
+  if [[ -z "${TMUX}" ]]; then
+    tmux attach -t rena || tmux new -s rena
+  fi
+}
+
+tmux_rz() {
+  if [[ -z "${TMUX}" ]]; then
+    rz $@
+  else
+    echo 'Please detach tmux first'
+  fi
+}
+
+tmux_sz() {
+  if [[ -z "${TMUX}" ]]; then
+    sz $@
+  else
+    echo 'Please detach tmux first'
+  fi
+}
+
+alias rz='tmux_rz'
+alias sz='tmux_sz'
