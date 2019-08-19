@@ -12,12 +12,8 @@ cur_dir="$(dirname ${BASH_SOURCE[0]})"
 
 # function
 set_alias() {
-  if [[ ! -f /etc/skel/.bash_aliases ]]; then
-    cp "${cur_dir}/bash_aliases.sh" /etc/skel/.bash_aliases
-  fi
-  if [[ ! -f /root/.bash_aliases ]]; then
-    cp "${cur_dir}/bash_aliases.sh" /root/.bash_aliases
-  fi
+  cp -f "${cur_dir}/bash_aliases.sh" /etc/skel/.bash_aliases
+  cp -f "${cur_dir}/bash_aliases.sh" /root/.bash_aliases
 }
 
 set_color() {
@@ -25,13 +21,14 @@ set_color() {
   if [[ $? -ne 0 ]]; then
     sed -i '/add by arashi bash.sh/,/end by arashi bash.sh/d' /etc/skel/.bashrc
   fi
-    cat >>/etc/skel/.bashrc <<EOF
+  cat >>/etc/skel/.bashrc <<EOF
 # add by arashi bash.sh
-if [ "$TERM" == "xterm" ]; then
+if [ "\$TERM" == "xterm" ]; then
     export TERM=xterm-256color
 fi
 # end by arashi bash.sh
 EOF
+  cp -f /etc/skel/.bashrc /root/.bashrc
 }
 
 main() {

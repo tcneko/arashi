@@ -12,7 +12,7 @@ export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 git_dir='/opt/git'
 
 # function
-install_tmux_conf() {
+ins_tmux_cfg() {
   if [[ -d "${git_dir}/tmux_theme" ]]; then
     git -C "${git_dir}/tmux_theme" pull
   else
@@ -31,6 +31,7 @@ set_auto_start() {
   if [[ $? -eq 0 ]]; then
     sed -i '/add by arashi tmux.sh/,/end by arashi tmux.sh/d' /etc/skel/.bashrc
   fi
+  cp -f /etc/skel/.bashrc /root/.bashrc
   cat >>/etc/skel/.bashrc <<EOF
 # add by arashi tmux.sh
 if command -v tmux &> /dev/null && [ -z "\$TMUX" ]; then
@@ -41,7 +42,7 @@ EOF
 }
 
 main() {
-  install_tmux_conf
+  ins_tmux_cfg
   set_auto_start
 }
 
