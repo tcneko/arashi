@@ -76,7 +76,7 @@ EOF
 
 change_port() {
   if [[ -n ${sshd_port} ]]; then
-    sed -Ei "s/^#*[[:space:]]*Port [0-9]{1,5}[[:space:]]*$/Port ${sshd_port}/g" ${cfg_sshd}
+    sed -Ei "s/^#*[[:space:]]*Port[[:space:]]+[0-9]{1,5}[[:space:]]*$/Port ${sshd_port}/g" ${cfg_sshd}
   fi
 }
 

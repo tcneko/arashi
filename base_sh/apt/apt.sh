@@ -19,6 +19,10 @@ load_cfg() {
   fi
 }
 
+apt_update() {
+  apt update
+}
+
 apt_upgrade() {
   if [[ ${flag_apt_upgrade} -eq '0' ]]; then
     apt upgrade -y
@@ -45,6 +49,7 @@ apt_remove() {
 
 main() {
   load_cfg
+  apt_update
   apt_upgrade
   apt_install
   apt_diable
