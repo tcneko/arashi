@@ -90,7 +90,7 @@ add_pubkey() {
       chown "${pubkey_user}:" "/home/${pubkey_user}/.ssh/authorized_keys"
       chmod 600 "/home/${pubkey_user}/.ssh/authorized_keys"
     else
-      echo_warning "Skip add user ${1}"
+      echo_warning "Skip add pubkey for user ${pubkey_user}"
     fi
   done
 }
