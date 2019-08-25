@@ -42,7 +42,7 @@ upd_tmux_cfg() {
   done
 }
 
-set_auto_start() {
+set_tmux_startup() {
   cat /etc/skel/.bashrc | grep 'add by arashi tmux.sh' &>/dev/null
   if [[ $? -eq 0 ]]; then
     sed -i '/add by arashi tmux.sh/,/end by arashi tmux.sh/d' /etc/skel/.bashrc
@@ -56,11 +56,20 @@ fi
 EOF
 }
 
+upd_tmux_startup() {
+  for user in ${upd_tmux_startup_user_s[@]}; do
+    dir_user_home=$(eval echo ~${user})
+    cp -f /etc/skel/.bashrc "${dir_user_home}/.bashrc"
+    chown ${user}: "${dir_user_home}/.bashrc"
+  done
+}
+
 main() {
   load_cfg
   ins_tmux_cfg
   upd_tmux_cfg
-  set_auto_start
+  set_tmux_startup
+  upd_tmux_startup
 }
 
 # main

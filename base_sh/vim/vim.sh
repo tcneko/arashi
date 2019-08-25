@@ -30,7 +30,7 @@ ins_vimrc() {
  catch
  endtry"
 
-  echo "${vimrc}" /etc/skel/.vimrc
+  echo "${vimrc}" >/etc/skel/.vimrc
 }
 
 upd_vim_cfg() {
