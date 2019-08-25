@@ -11,12 +11,12 @@ export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 dir_cur="$(dirname ${BASH_SOURCE[0]})"
 cfg_file="${dir_cur}/arashi_cfg.sh"
 export_func_s=('echo_info' 'echo_warning' 'echo_error' 'echo_exit' 'request_input' 'test_or_mkdir' 'safe_exit')
-export_var_s=('flag_tmp_dir' 'tmp_dir')
+export_var_s=('flag_dir_tmp' 'tmp_dir')
 
 # function
 safe_exit() {
-  if [[ ${temp_dir_flag} -eq 0 ]]; then
-    rm -rf ${temp_dir}
+  if [[ ${flag_dir_tmp} -eq 0 ]]; then
+    rm -rf ${dir_tmp}
   fi
   exit $1
 }
@@ -71,7 +71,7 @@ load_cfg() {
 }
 
 mk_tmp_dir() {
-  flag_tmp_dir=0
+  flag_dir_tmp=0
   tmp_dir=$(mktemp -d)
 }
 

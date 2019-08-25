@@ -9,9 +9,18 @@
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 
 # variables
+cfg_main="$(dirname ${BASH_SOURCE[0]})/tmux_cfg.sh"
 dir_git='/opt/git'
 
 # function
+load_cfg() {
+  if [[ -r ${cfg_main} ]]; then
+    source ${cfg_main}
+  else
+    exit 1
+  fi
+}
+
 ins_tmux_cfg() {
   if [[ -d "${dir_git}/tmux_theme" ]]; then
     git -C "${dir_git}/tmux_theme" pull
@@ -20,10 +29,17 @@ ins_tmux_cfg() {
   fi
   cat ${dir_git}/tmux_theme/.tmux.conf | sed -E '/C-a/s/^/###/g' >/etc/skel/.tmux.conf
   cat ${dir_git}/tmux_theme/.tmux.conf.local |
-    sed -E 's/^(tmux_conf_theme_.*_separator)/###\1/g;s/^#(tmux_conf_theme_.*_separator)/\1/g' |
-    sed -E 's/❐|⌨|◼|◻/●/g' >/etc/skel/.tmux.conf.local
-  cp /etc/skel/.tmux.conf /root/.tmux.conf
-  cp /etc/skel/.tmux.conf.local /root/.tmux.conf.local
+    sed -E "/tmux_conf_theme_terminal_title/s/='.*'/='#{username}@#{hostname}'/g" >/etc/skel/.tmux.conf.local
+}
+
+upd_tmux_cfg() {
+  for user in ${upd_tmux_cfg_user_s[@]}; do
+    dir_user_home=$(eval echo ~${user})
+    cp -f /etc/skel/.tmux.conf "${dir_user_home}/.tmux.conf"
+    chown ${user}: "${dir_user_home}/.tmux.conf"
+    cp -f /etc/skel/.tmux.conf.local "${dir_user_home}/.tmux.conf.local"
+    chown ${user}: "${dir_user_home}/.tmux.conf.local"
+  done
 }
 
 set_auto_start() {
@@ -31,10 +47,9 @@ set_auto_start() {
   if [[ $? -eq 0 ]]; then
     sed -i '/add by arashi tmux.sh/,/end by arashi tmux.sh/d' /etc/skel/.bashrc
   fi
-  cp -f /etc/skel/.bashrc /root/.bashrc
   cat >>/etc/skel/.bashrc <<EOF
 # add by arashi tmux.sh
-if command -v tmux &> /dev/null && [ -z "\$TMUX" ]; then
+if command -v tmux &> /dev/null && [[ -z "\$TMUX" ]]; then
     tmux attach -t rena || tmux new -s rena
 fi
 # end by arashi tmux.sh
@@ -42,7 +57,9 @@ EOF
 }
 
 main() {
+  load_cfg
   ins_tmux_cfg
+  upd_tmux_cfg
   set_auto_start
 }
 
