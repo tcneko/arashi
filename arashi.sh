@@ -72,7 +72,7 @@ load_cfg() {
 
 mk_tmp_dir() {
   flag_dir_tmp=0
-  tmp_dir=$(mktemp -d)
+  dir_tmp=$(mktemp -d)
 }
 
 mk_lt_dir() {
