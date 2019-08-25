@@ -9,9 +9,18 @@
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 
 # variables
+cfg_main="$(dirname ${BASH_SOURCE[0]})/vim_cfg.sh"
 dir_git='/opt/git'
 
 # function
+load_cfg() {
+  if [[ -r ${cfg_main} ]]; then
+    source ${cfg_main}
+  else
+    exit 1
+  fi
+}
+
 ins_vimrc() {
   if [[ -d "${dir_git}/vim_runtime" ]]; then
     git -C "${dir_git}/vim_runtime" pull
@@ -45,6 +54,7 @@ upd_vim_cfg() {
 }
 
 main() {
+  load_cfg
   ins_vimrc
   upd_vim_cfg
 }

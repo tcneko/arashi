@@ -35,10 +35,14 @@ ins_tmux_cfg() {
 upd_tmux_cfg() {
   for user in ${upd_tmux_cfg_user_s[@]}; do
     dir_user_home=$(eval echo ~${user})
-    cp -f /etc/skel/.tmux.conf "${dir_user_home}/.tmux.conf"
-    chown ${user}: "${dir_user_home}/.tmux.conf"
-    cp -f /etc/skel/.tmux.conf.local "${dir_user_home}/.tmux.conf.local"
-    chown ${user}: "${dir_user_home}/.tmux.conf.local"
+    if [[ "${dir_user_home}" != "~${user}" ]]; then
+      cp -f /etc/skel/.tmux.conf "${dir_user_home}/.tmux.conf"
+      chown ${user}: "${dir_user_home}/.tmux.conf"
+      cp -f /etc/skel/.tmux.conf.local "${dir_user_home}/.tmux.conf.local"
+      chown ${user}: "${dir_user_home}/.tmux.conf.local"
+    else
+      echo_warning "Skip upadte tmux configure for user ${user}"
+    fi
   done
 }
 
@@ -63,7 +67,7 @@ upd_tmux_startup() {
       cp -f /etc/skel/.bashrc "${dir_user_home}/.bashrc"
       chown ${user}: "${dir_user_home}/.bashrc"
     else
-      echo_warning "Skip upadte tmux configure for user ${user}"
+      echo_warning "Skip upadte tmux startup for user ${user}"
     fi
   done
 }
