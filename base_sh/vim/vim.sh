@@ -29,15 +29,18 @@ ins_vimrc() {
  source ${dir_git}/vim_runtime/my_configs.vim
  catch
  endtry"
-
   echo "${vimrc}" >/etc/skel/.vimrc
 }
 
 upd_vim_cfg() {
   for user in ${upd_vim_cfg_user_s[@]}; do
-    dir_user_home=$(eval echo ~${user})
-    cp -f /etc/skel/.vimrc "${dir_user_home}/.vimrc"
-    chown ${user}: "${dir_user_home}/.vimrc"
+    dir_user_home=$(eval echo "~${user}")
+    if [[ "${dir_user_home}" != "~${user}" ]]; then
+      cp -f /etc/skel/.vimrc "${dir_user_home}/.vimrc"
+      chown ${user}: "${dir_user_home}/.vimrc"
+    else
+      echo_warning "Skip upadte vim configure for user ${user}"
+    fi
   done
 }
 

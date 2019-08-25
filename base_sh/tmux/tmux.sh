@@ -58,9 +58,13 @@ EOF
 
 upd_tmux_startup() {
   for user in ${upd_tmux_startup_user_s[@]}; do
-    dir_user_home=$(eval echo ~${user})
-    cp -f /etc/skel/.bashrc "${dir_user_home}/.bashrc"
-    chown ${user}: "${dir_user_home}/.bashrc"
+    dir_user_home=$(eval echo "~${user}")
+    if [[ "${dir_user_home}" != "~${user}" ]]; then
+      cp -f /etc/skel/.bashrc "${dir_user_home}/.bashrc"
+      chown ${user}: "${dir_user_home}/.bashrc"
+    else
+      echo_warning "Skip upadte tmux configure for user ${user}"
+    fi
   done
 }
 

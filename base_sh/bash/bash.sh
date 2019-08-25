@@ -40,11 +40,15 @@ EOF
 
 upd_bash_cfg() {
   for user in ${upd_bash_cfg_user_s[@]}; do
-    dir_user_home=$(eval echo ~${user})
-    cp -f /etc/skel/.bashrc "${dir_user_home}/.bashrc"
-    chown ${user}: "${dir_user_home}/.bashrc"
-    cp -f /etc/skel/.bash_aliases "${dir_user_home}/.bash_aliases"
-    chown ${user}: "${dir_user_home}/.bash_aliases"
+    dir_user_home=$(eval echo "~${user}")
+    if [[ "${dir_user_home}" != "~${user}" ]]; then
+      cp -f /etc/skel/.bashrc "${dir_user_home}/.bashrc"
+      chown ${user}: "${dir_user_home}/.bashrc"
+      cp -f /etc/skel/.bash_aliases "${dir_user_home}/.bash_aliases"
+      chown ${user}: "${dir_user_home}/.bash_aliases"
+    else
+      echo_warning "Skip upadte bash configure for user ${user}"
+    fi
   done
 }
 
