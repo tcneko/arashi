@@ -30,9 +30,7 @@ apt_upgrade() {
 }
 
 apt_install() {
-  for apt_install in ${apt_install_s[@]}; do
-    apt install -y ${apt_install}
-  done
+  apt install -y ${apt_install_s[@]}
 }
 
 apt_diable() {
@@ -42,9 +40,7 @@ apt_diable() {
 }
 
 apt_remove() {
-  for apt_diable in ${apt_diable_s[@]}; do
-    apt disable -y ${apt_install}
-  done
+  apt remove -y ${apt_diable_s[@]}
 }
 
 main() {

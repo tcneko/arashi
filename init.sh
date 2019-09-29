@@ -23,9 +23,9 @@ fi
 
 if [ ! -d ${install_dir} ]; then
   mkdir -p ${install_dir}
-  mkdir -p ${install_dir}/ext_sh
 fi
 cp -rf *.sh base_sh ext_sh ${install_dir}
+cp -rf version "${install_dir}/version_arashi"
 chmod +x ${install_dir}/arashi.sh
 
 echo_info 'Init succeeded if no error is reported above'
