@@ -25,16 +25,34 @@ set_alias() {
 }
 
 set_color() {
-  cat /etc/skel/.bashrc | grep 'arashi/bash/bash.sh' &>/dev/null
+  cat /etc/bash.bashrc | grep 'arashi/bash/bash.sh' &>/dev/null
   if [[ $? -ne 0 ]]; then
-    sed -i '/add by arashi bash.sh/,/end by arashi bash.sh/d' /etc/skel/.bashrc
+    sed -i '/add by arashi bash.sh set_color/,/end by arashi bash.sh set_color/d' /etc/bash.bashrc
   fi
-  cat >>/etc/skel/.bashrc <<EOF
-# add by arashi bash.sh
+  cat >>/etc/bash.bashrc <<EOF
+# add by arashi bash.sh set_color
 if [[ "\$TERM" == "xterm" ]]; then
     export TERM=xterm-256color
 fi
-# end by arashi bash.sh
+# end by arashi bash.sh set_color
+EOF
+}
+
+set_ps1() {
+  cat /etc/skel/.bashrc | grep 'arashi/bash/bash.sh' &>/dev/null
+  if [[ $? -ne 0 ]]; then
+    sed -i '/add by arashi bash.sh set_ps1/,/end by arashi bash.sh set_ps1/d' /etc/skel/.bashrc
+  fi
+  sed -i 's/unset color_prompt force_color_prompt/#unset color_prompt force_color_prompt/g' /etc/skel/.bashrc 
+  cat >>/etc/skel/.bashrc <<EOF
+# add by arashi bash.sh set_ps1
+if [ "$color_prompt" = yes ]; then
+     PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\H\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]:\[\033[01;33m\]$?\[\033[00m\]\n\$ '
+else
+     PS1='${debian_chroot:+($debian_chroot)}\u@\H:\w:$?\n\$ '
+fi
+unset color_prompt force_color_prompt
+# end by arashi bash.sh set_ps1
 EOF
 }
 
@@ -56,6 +74,7 @@ main() {
   load_cfg
   set_alias
   set_color
+  set_ps1
   upd_bash_cfg
 }
 
