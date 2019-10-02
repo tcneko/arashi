@@ -47,9 +47,9 @@ set_ps1() {
   cat >>/etc/skel/.bashrc <<EOF
 # add by arashi bash.sh set_ps1
 if [ "\$color_prompt" = yes ]; then
-     PS1='\${debian_chroot:+(\$debian_chroot)}\[\033[01;32m\]\u@\H\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]:\[\033[01;33m\]\$?\[\033[00m\]\n\$ '
+     PS1='\${debian_chroot:+(\$debian_chroot)}\[\033[01;32m\]\u\[\033[00m\]:\[\033[01;35m\]\H\[\033[00m\]:\[\033[01;36m\]\w\[\033[00m\]:\[\033[01;33m\]\$?\[\033[00m\]\n\$ '
 else
-     PS1='\${debian_chroot:+(\$debian_chroot)}\u@\H:\w:\$?\n\$ '
+     PS1='\${debian_chroot:+(\$debian_chroot)}\u:\H:\w:\$?\n\$ '
 fi
 unset color_prompt force_color_prompt
 # end by arashi bash.sh set_ps1
