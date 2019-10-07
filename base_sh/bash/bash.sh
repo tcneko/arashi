@@ -73,8 +73,8 @@ upd_bash_cfg() {
     if [[ "${dir_user_home}" != "~${user}" ]]; then
       cp -f /etc/skel/.bashrc "${dir_user_home}/.bashrc"
       chown ${user}: "${dir_user_home}/.bashrc"
-      cp -f /etc/skel/.bash_aliases "${dir_user_home}/.bash_aliases"
-      chown ${user}: "${dir_user_home}/.bash_aliases"
+      cp -f /etc/skel/.bash_aliases_arashi "${dir_user_home}/.bash_aliases_arashi"
+      chown ${user}: "${dir_user_home}/.bash_aliases_arashi"
     else
       echo_warning "Skip upadte bash configure for user ${user}"
     fi
