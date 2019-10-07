@@ -21,7 +21,18 @@ load_cfg() {
 }
 
 set_alias() {
-  cp -f "${dir_cur}/bash_aliases.sh" /etc/skel/.bash_aliases
+  cp -f "${dir_cur}/bash_aliases.sh" /etc/skel/.bash_aliases_arashi
+  cat /etc/skel/.bash_aliases | grep 'arashi/bash/bash.sh set_alias' &>/dev/null
+  if [[ $? -ne 0 ]]; then
+    sed -i '/add by arashi bash.sh set_alias/,/end by arashi bash.sh set_alias/d' /etc/bash.bashrc
+  fi
+  cat >>/etc/skel/.bash_aliases <<EOF
+# add by arashi bash.sh set_alias
+if [[ -f ~/.bash_aliases_arashi ]]; then
+    . ~/.bash_aliases_arashi
+fi
+# end by arashi bash.sh set_alias
+EOF
 }
 
 set_color() {
