@@ -32,6 +32,8 @@ ins_tmux_cfg() {
   sed -i '/add by arashi tmux.sh ins_tmux_cfg/,/end by arashi tmux.sh ins_tmux_cfg/d' /etc/skel/.tmux.conf.local
   cat >>/etc/skel/.tmux.conf.local <<EOF
 ## add by arashi tmux.sh ins_tmux_cfg
+set -g default-terminal "xterm-256color"
+
 tmux_conf_theme_terminal_title='#{username}@#H'
 
 tmux_conf_theme_status_left_fg='#000000,#e4e4e4,#000000'  # black, white , white
