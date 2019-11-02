@@ -28,8 +28,30 @@ ins_tmux_cfg() {
     git clone https://github.com/gpakosz/.tmux.git ${dir_git}/tmux_theme
   fi
   cat ${dir_git}/tmux_theme/.tmux.conf | sed -E '/C-a/s/^/###/g' >/etc/skel/.tmux.conf
-  cat ${dir_git}/tmux_theme/.tmux.conf.local |
-    sed -E "/tmux_conf_theme_terminal_title/s/='.*'/='#{username}@#{hostname}'/g" >/etc/skel/.tmux.conf.local
+  cp ${dir_git}/tmux_theme/.tmux.conf.local /etc/skel/.tmux.conf.local
+  sed -i '/add by arashi tmux.sh ins_tmux_cfg/,/end by arashi tmux.sh ins_tmux_cfg/d' /etc/skel/.tmux.conf.local
+  cat >>/etc/skel/.tmux.conf.local <<EOF
+## add by arashi tmux.sh ins_tmux_cfg
+tmux_conf_theme_terminal_title='#{username}@#H'
+
+tmux_conf_theme_status_left_fg='#000000,#e4e4e4,#000000'  # black, white , white
+tmux_conf_theme_status_left_bg='#ffff00,#ff00af,#e4e4e4'  # yellow, pink, white blue
+tmux_conf_theme_status_left_attr='bold,bold,bold'
+
+tmux_conf_theme_status_right_fg='#000000'
+tmux_conf_theme_status_right_bg='#e4e4e4'
+tmux_conf_theme_status_right_attr='bold'
+
+tmux_conf_theme_prefix=' prefix '
+tmux_conf_theme_pairing=' pair '
+tmux_conf_theme_synchronized=' sync '
+
+tmux_conf_theme_status_left=' ❐ #S | #{username}#{root} |#{prefix}'
+tmux_conf_theme_status_right='#{synchronized}#{pairing}'
+
+set -g status-interval 0
+## end by arashi tmux.sh ins_tmux_cfg
+EOF
 }
 
 upd_tmux_cfg() {
