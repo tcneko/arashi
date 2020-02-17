@@ -43,7 +43,7 @@ alias p='pwd'
 ## tmux
 tmuxa() {
   if [[ -z "${TMUX}" ]]; then
-    tmux attach -t rena || tmux new -s rena
+    tmux attach -t rena || (sleep 1 && tmux new -s rena)
   fi
 }
 
