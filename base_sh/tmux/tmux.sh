@@ -78,7 +78,7 @@ set_tmux_startup() {
   cat >>/etc/skel/.bashrc <<EOF
 # add by arashi tmux.sh
 if command -v tmux &> /dev/null && [[ -z "\$TMUX" && "\$UID" -ne 0 ]]; then
-    tmux attach -t rena || sleep 1 && tmux new -s rena
+    tmux attach -t rena || (sleep 1 && tmux new -s rena)
 fi
 # end by arashi tmux.sh
 EOF
