@@ -22,7 +22,7 @@ load_cfg() {
 
 ins_caddy() {
   caddy_pulgin_sp_by_comma="$(echo ${caddy_pulgin_s[@]} | sed 's/ /,/g')"
-  wget https://caddyserver.com/download/linux/amd64?plugins=${caddy_pulgin_sp_by_comma}&license=personal&telemetry=off -O ${dir_git}/caddy.tar.gz
+  wget "https://caddyserver.com/download/linux/amd64?plugins=${caddy_pulgin_sp_by_comma}&license=personal&telemetry=off" -O ${dir_git}/caddy.tar.gz
   rm -rf /usr/local/bin/caddy
   tar -C /usr/local/bin -zxf ${dir_git}/caddy.tar.gz caddy
   rm -rf /lib/systemd/system/caddy.service
