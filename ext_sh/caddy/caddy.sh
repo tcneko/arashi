@@ -8,13 +8,13 @@
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 
 # variables
-cfg_file="$(dirname ${BASH_SOURCE[0]})/caddy_cfg.sh"
-dir_git='/opt/git'
+d_cur="$(dirname ${BASH_SOURCE[0]})"
+f_cfg="${dir_cur}/caddy_cfg.sh"
 
 # function
 load_cfg() {
-  if [[ -r ${cfg_file} ]]; then
-    source ${cfg_file}
+  if [[ -r ${f_cfg} ]]; then
+    source ${f_cfg}
   else
     exit 1
   fi
@@ -24,33 +24,41 @@ ins_caddy() {
   echo "deb [trusted=yes] https://apt.fury.io/caddy/ /" | sudo tee -a /etc/apt/sources.list.d/caddy-fury.list
   apt update
   apt install caddy
-  sed -i "s/User=caddy/User=s_caddy/g" /lib/systemd/system/caddy-api.service
-  sed -i "s/Group=caddy/Group=s_caddy/g" /lib/systemd/system/caddy-api.service
+  cp -f ${d_cur}/caddy.service /lib/systemd/system/
 }
 
 sysd_reload() {
   systemctl daemon-reload
 }
 
+disable_def_serv() {
+  systemctl disable caddy-api.service
+  systemctl disable caddy-api.service
+}
+
 enable_serv() {
   if [[ ${flag_enable_serv} -eq 0 ]]; then
-    systemctl enable caddy-api.service
+    systemctl enable caddy.service
   else
-    systemctl disable caddy-api.service
+    systemctl disable caddy.service
   fi
 }
 
 start_serv() {
-  systemctl stop caddy-api.service
+  systemctl stop caddy.service
   if [[ ${flag_start_serv} -eq 0 ]]; then
     sleep 1
-    systemctl start caddy-api.service
+    systemctl start caddy.service
   fi
 }
 
 main() {
   load_cfg
   ins_caddy
+  disable_def_serv
+  sysd_reload
+  enable_serv
+  start_serv
 }
 
 # main
