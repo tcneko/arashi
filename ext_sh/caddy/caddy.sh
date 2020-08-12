@@ -28,6 +28,7 @@ ins_caddy() {
   test_or_mkdir ${d_caddy}
   cp -f ${d_cur}/caddyenv ${d_caddy}/
   touch ${d_caddy}/caddyfile
+  chown -R s_caddy: ${d_caddy}
   cp -f ${d_cur}/caddy.service /lib/systemd/system/
 }
 
