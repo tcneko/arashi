@@ -24,8 +24,8 @@ ins_caddy() {
   echo "deb [trusted=yes] https://apt.fury.io/caddy/ /" | sudo tee -a /etc/apt/sources.list.d/caddy-fury.list
   apt update
   apt install caddy
-  sed -i "s/User=caddy/User=s_caddy/g" /lib/systemd/system/caddy.service
-  sed -i "s/Group=caddy/Group=s_caddy/g" /lib/systemd/system/caddy.service
+  sed -i "s/User=caddy/User=s_caddy/g" /lib/systemd/system/caddy-api.service
+  sed -i "s/Group=caddy/Group=s_caddy/g" /lib/systemd/system/caddy-api.service
 }
 
 sysd_reload() {
@@ -34,15 +34,17 @@ sysd_reload() {
 
 enable_serv() {
   if [[ ${flag_enable_serv} -eq 0 ]]; then
-    systemctl enable caddy.service
+    systemctl enable caddy-api.service
+  else
+    systemctl disable caddy-api.service
   fi
 }
 
 start_serv() {
+  systemctl stop caddy-api.service
   if [[ ${flag_start_serv} -eq 0 ]]; then
-    systemctl stop caddy.service
     sleep 1
-    systemctl start caddy.service
+    systemctl start caddy-api.service
   fi
 }
 
