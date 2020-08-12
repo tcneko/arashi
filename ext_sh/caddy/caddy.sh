@@ -21,21 +21,29 @@ load_cfg() {
 }
 
 ins_caddy() {
-  caddy_pulgin_sp_by_comma="$(echo ${caddy_pulgin_s[@]} | sed 's/ /,/g')"
-  wget "https://caddyserver.com/download/linux/amd64?plugins=${caddy_pulgin_sp_by_comma}&license=personal&telemetry=off" -O ${dir_git}/caddy.tar.gz
-  rm -rf /usr/local/bin/caddy
-  tar -C /usr/local/bin -zxf ${dir_git}/caddy.tar.gz caddy
-  rm -rf /lib/systemd/system/caddy.service
-  tar -C /lib/systemd/system --strip-components 2 -zxf ${dir_git}/caddy.tar.gz init/linux-systemd/caddy.service
-  chown root:root /usr/local/bin/caddy
-  setcap 'cap_net_bind_service=+eip' /usr/local/bin/caddy
-  test_or_mkdir /etc/caddy
-  test_or_mkdir /etc/caddy/vhosts
-  chown -R root:www-data /etc/caddy
-  test_or_mkdir /etc/ssl/caddy
-  chown -R www-data:root /etc/ssl/caddy
-  chmod 770 /etc/ssl/caddy
-  touch /etc/caddy/Caddyfile
+  echo "deb [trusted=yes] https://apt.fury.io/caddy/ /" | sudo tee -a /etc/apt/sources.list.d/caddy-fury.list
+  apt update
+  apt install caddy
+  sed -i "s/User=caddy/User=s_caddy/g" /lib/systemd/system/caddy.service
+  sed -i "s/Group=caddy/Group=s_caddy/g" /lib/systemd/system/caddy.service
+}
+
+sysd_reload() {
+  systemctl daemon-reload
+}
+
+enable_serv() {
+  if [[ ${flag_enable_serv} -eq 0 ]]; then
+    systemctl enable caddy.service
+  fi
+}
+
+start_serv() {
+  if [[ ${flag_start_serv} -eq 0 ]]; then
+    systemctl stop caddy.service
+    sleep 1
+    systemctl start caddy.service
+  fi
 }
 
 main() {

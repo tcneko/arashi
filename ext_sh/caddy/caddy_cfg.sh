@@ -1,3 +1,4 @@
 #!/bin/bash
 
-caddy_pulgin_s=('http.expires' 'http.ipfilter')
+flag_enable_serv='0'
+flag_start_serv='0'
