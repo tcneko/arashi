@@ -9,7 +9,7 @@ export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 
 # variables
 d_cur="$(dirname ${BASH_SOURCE[0]})"
-f_cfg="${dir_cur}/caddy_cfg.sh"
+f_cfg="${d_cur}/caddy_cfg.sh"
 
 # function
 load_cfg() {
@@ -21,19 +21,19 @@ load_cfg() {
 }
 
 ins_caddy() {
-  echo "deb [trusted=yes] https://apt.fury.io/caddy/ /" | sudo tee -a /etc/apt/sources.list.d/caddy-fury.list
+  echo "deb [trusted=yes] https://apt.fury.io/caddy/ /" | tee -a /etc/apt/sources.list.d/caddy-fury.list
   apt update
   apt install caddy
   cp -f ${d_cur}/caddy.service /lib/systemd/system/
 }
 
-sysd_reload() {
-  systemctl daemon-reload
+disable_def_serv() {
+  systemctl stop caddy-api.service
+  systemctl disable caddy-api.service
 }
 
-disable_def_serv() {
-  systemctl disable caddy-api.service
-  systemctl disable caddy-api.service
+sysd_reload() {
+  systemctl daemon-reload
 }
 
 enable_serv() {
