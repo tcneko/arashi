@@ -48,7 +48,7 @@ tmux_conf_theme_prefix=' prefix '
 tmux_conf_theme_pairing=' pair '
 tmux_conf_theme_synchronized=' sync '
 
-tmux_conf_theme_status_left=' ❐ #S | #{username}#{root} |#{prefix}'
+tmux_conf_theme_status_left=' #S | #{username}#{root} |#{prefix}'
 tmux_conf_theme_status_right='#{synchronized}#{pairing}'
 
 set -g status-interval 0
