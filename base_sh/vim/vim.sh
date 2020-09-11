@@ -39,6 +39,9 @@ ins_vimrc() {
  catch
  endtry"
   echo "${vimrc}" >/etc/skel/.vimrc
+  vimrc_my_config='set foldcolumn=0
+'
+  echo "${vimrc_my_config}" >${dir_git}/vim_runtime/my_configs.vim
 }
 
 upd_vim_cfg() {
