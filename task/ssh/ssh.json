@@ -1,0 +1,9 @@
+{
+  "b_disable_root": 0,
+  "b_disable_pass": 1,
+  "l_limit_user": [],
+  "l_limit_ip": [],
+  "i_sshd_port": 55555,
+  "l_pubkey_user": [],
+  "b_restart_sshd": 0
+}

@@ -1,0 +1,14 @@
+{
+  "l_task": [
+    "timezone",
+    "sysctl",
+    "mkdir",
+    "apt",
+    "bash",
+    "vim",
+    "tmux",
+    "user",
+    "sudo",
+    "ssh"
+  ]
+}

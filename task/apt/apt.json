@@ -1,0 +1,14 @@
+{
+  "l_lsb_support": ["Ubuntu 18.04", "Ubuntu 20.04"],
+  "b_apt_upgrade": 0,
+  "l_apt_install": [
+    "build-essential",
+    "lrzsz",
+    "net-tools",
+    "dos2unix",
+    "zip",
+    "subnetcalc"
+  ],
+  "l_apt_disable": [],
+  "l_apt_remove": []
+}

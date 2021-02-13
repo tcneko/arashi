@@ -1,0 +1,9 @@
+{
+  "base_id_nor": 1000,
+  "base_id_sys": 5000,
+  "l_nor_user": ["foo"],
+  "l_sys_user": [],
+  "a_nor_user_pass": {
+    "foo": "bar"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "l_rm_def_user": [],
+  "l_rm_def_group": ["admin", "sudo"],
+  "l_add_user": [],
+  "l_add_group": []
+}
