@@ -24,8 +24,8 @@ load_lib() {
 
 load_cfg() {
   if [[ -r ${f_cfg} ]]; then
-    mapfile -t l_rm_user < <(jq -r ".l_rm_user[]" ${f_cfg})
-    mapfile -t l_rm_group < <(jq -r ".l_rm_group[]" ${f_cfg})
+    mapfile -t l_rm_def_user < <(jq -r ".l_rm_def_user[]" ${f_cfg})
+    mapfile -t l_rm_def_group < <(jq -r ".l_rm_def_group[]" ${f_cfg})
     mapfile -t l_add_user < <(jq -r ".l_add_user[]" ${f_cfg})
     mapfile -t l_add_group < <(jq -r ".l_add_group[]" ${f_cfg})
   else
@@ -34,14 +34,14 @@ load_cfg() {
 }
 
 rm_def_user() {
-  for user in ${l_rm_user[@]}; do
+  for user in ${l_rm_def_user[@]}; do
     sed -Ei "/^[[:space:]]*${user}.*ALL[[:space:]]*$/s/^/#/g" ${f_sudo}
     check_sh_retrun
   done
 }
 
 rm_def_group() {
-  for group in ${l_rm_group[@]}; do
+  for group in ${l_rm_def_group[@]}; do
     sed -Ei "/^[[:space:]]*%${group}.*ALL[[:space:]]*$/s/^/#/g" ${f_sudo}
     check_sh_retrun
   done

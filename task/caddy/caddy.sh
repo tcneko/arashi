@@ -26,7 +26,7 @@ install_caddy() {
   echo "deb [trusted=yes] https://apt.fury.io/caddy/ /" >/etc/apt/sources.list.d/caddy-fury.list
   apt -y update
   apt -y install caddy
-  test_or_mkdir ${d_caddy}
+  mkdir -p ${d_caddy}
   cp -f ${d_cur}/caddyenv ${d_caddy}/
   touch ${d_caddy}/caddyfile
   chown -R s_caddy: ${d_caddy}
