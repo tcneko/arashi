@@ -32,7 +32,6 @@ load_cfg() {
     for key in ${l_key[@]}; do
       a_nor_user_pass[${key}]=$(jq -r ".a_nor_user_pass.${key}" ${f_cfg})
     done
-    declare -p a_nor_user_pass
   else
     exit 1
   fi

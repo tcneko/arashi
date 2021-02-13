@@ -31,7 +31,7 @@ check_root_exit() {
 
 check_command_exit() {
   command -v jq &>/dev/null
-  if (($? == 0)); then
+  if (($? != 0)); then
     echo_error "Please install \"jq\""
     exit 1
   fi
