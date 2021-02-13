@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# tcneko <tcneko@outlook.com>
-# create: 2019.08
+# auther: tcneko <tcneko@outlook.com>
+# start from: 2019.08
 # last test environment: ubuntu 18.04
 # description:
 

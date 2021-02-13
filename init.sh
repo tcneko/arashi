@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# tcneko <tcneko@outlook.com>
-# create: 2019.08
+# auther: tcneko <tcneko@outlook.com>
+# start from: 2019.08
 # last test environment: ubuntu 18.04
 # description:
 
@@ -40,8 +40,8 @@ check_command_exit() {
 install_arashi() {
   mkdir -p ${d_ins}
 
-  cp -rf arashi.sh arashi.json task ${d_ins}
-  cp -rf version "${d_ins}/version_arashi"
+  cp -rf lib task arashi.sh arashi.json ${d_ins}
+  cp -rf version ${d_ins}/version_arashi
 
   echo_info 'Init succeeded if no error is reported above'
   echo_info "Please run: sudo bash ${d_ins}/arashi.sh"

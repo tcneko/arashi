@@ -9,6 +9,7 @@
     "tmux",
     "user",
     "sudo",
-    "ssh"
+    "ssh",
+    "rc_local"
   ]
 }
