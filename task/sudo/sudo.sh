@@ -10,7 +10,7 @@ export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 # variables
 d_cur="$(dirname ${BASH_SOURCE[0]})"
 f_lib="${d_cur}/../../lib/lib_arashi.sh"
-f_cfg="${d_cur}/sudo_cfg.sh"
+f_cfg="${d_cur}/sudo.json"
 f_sudo='/etc/sudoers'
 
 # function

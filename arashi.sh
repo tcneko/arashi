@@ -24,7 +24,7 @@ load_lib() {
 
 load_cfg() {
   if [[ -r ${f_cfg} ]]; then
-    mapfile -f l_task < <(jq -r ".l_task[]" ${f_cfg})
+    mapfile -t l_task < <(jq -r ".l_task[]" ${f_cfg})
   else
     exit 1
   fi
@@ -48,7 +48,7 @@ run_task() {
         sh_return=1
       fi
     else
-      echo_warning "Skip task \"${task_sh}\""
+      echo_warning "Task \"${task_sh}\" failed"
       sh_return=1
     fi
   done

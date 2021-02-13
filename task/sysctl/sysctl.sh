@@ -8,8 +8,9 @@
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 
 # variables
+d_cur="$(dirname ${BASH_SOURCE[0]})"
 f_lib="${d_cur}/../../lib/lib_arashi.sh"
-f_cfg="$(dirname ${BASH_SOURCE[0]})/sysctl.json"
+f_cfg="${d_cur}/sysctl.json"
 f_sysctl='/etc/sysctl.conf'
 
 # function
@@ -70,4 +71,4 @@ main() {
 # main
 main
 
-exit 0
+exit ${sh_return}

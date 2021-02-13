@@ -4,10 +4,10 @@
     "sysctl",
     "mkdir",
     "apt",
+    "user",
     "bash",
     "vim",
     "tmux",
-    "user",
     "sudo",
     "ssh",
     "rc_local"
