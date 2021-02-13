@@ -31,7 +31,7 @@ load_cfg() {
 }
 
 check_root_exit() {
-  if (($(id -u) == 0)); then
+  if (($(id -u) != 0)); then
     echo_error 'Please rerun as root'
     exit 1
   fi
