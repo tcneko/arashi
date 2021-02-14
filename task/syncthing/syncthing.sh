@@ -10,8 +10,8 @@ export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 # variables
 d_cur="$(dirname ${BASH_SOURCE[0]})"
 f_lib="${d_cur}/../../lib/lib_arashi.sh"
-f_cfg="${d_cur}/caddy.json"
-d_caddy="/etc/caddy"
+f_cfg="${d_cur}/syncthing.json"
+d_syncthing="/etc/syncthing"
 
 # function
 load_lib() {
@@ -32,23 +32,18 @@ load_cfg() {
   fi
 }
 
-install_caddy() {
-  dpkg -s caddy &>/dev/null
+install_syncthing() {
+  dpkg -s syncthing &>/dev/null
   if (($? != 0)); then
-    echo "deb [trusted=yes] https://apt.fury.io/caddy/ /" >/etc/apt/sources.list.d/caddy-fury.list
+    curl -s https://syncthing.net/release-key.txt | sudo apt-key add -
+    echo "deb https://apt.syncthing.net/ syncthing stable" >/etc/apt/sources.list.d/syncthing.list
     apt -y update
-    apt -y install caddy
+    apt -y install syncthing
   fi
-  mkdir -p ${d_caddy}
-  cp -f ${d_cur}/caddyenv ${d_caddy}/
-  touch ${d_caddy}/caddyfile
-  chown -R s_caddy: ${d_caddy}
-  cp -f ${d_cur}/caddy.service /lib/systemd/system/
-}
-
-disable_def_serv() {
-  systemctl stop caddy-api.service
-  systemctl disable caddy-api.service
+  mkdir -p ${d_syncthing}
+  touch config.xml
+  chown -R s_syncthing: ${d_syncthing}
+  cp -f ${d_cur}/syncthing.service /lib/systemd/system/
 }
 
 reload_sysd() {
@@ -57,17 +52,17 @@ reload_sysd() {
 
 enable_serv() {
   if ((${b_enable_serv} == 0)); then
-    systemctl enable caddy.service
+    systemctl enable syncthing.service
   else
-    systemctl disable caddy.service
+    systemctl disable syncthing.service
   fi
 }
 
 start_serv() {
   if ((${b_start_serv} == 0)); then
-    systemctl start caddy.service
+    systemctl start syncthing.service
   else
-    systemctl stop caddy.service
+    systemctl stop syncthing.service
   fi
 }
 
@@ -78,8 +73,7 @@ main() {
   if (($? != 0)); then
     exit 1
   fi
-  install_caddy
-  disable_def_serv
+  install_syncthing
   reload_sysd
   enable_serv
   start_serv

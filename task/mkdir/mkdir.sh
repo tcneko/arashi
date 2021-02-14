@@ -21,7 +21,7 @@ load_lib() {
 
 load_cfg() {
   if [[ -r ${f_cfg} ]]; then
-    mapfile -t l_d_lt < <(jq ".l_d_lt[]" ${f_cfg})
+    mapfile -t l_d_lt < <(jq -r ".l_d_lt[]" ${f_cfg})
   else
     exit 1
   fi

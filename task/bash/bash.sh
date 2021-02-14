@@ -23,6 +23,7 @@ load_lib() {
 
 load_cfg() {
   if [[ -r ${f_cfg} ]]; then
+    mapfile -t l_lsb_support < <(jq -r ".l_lsb_support[]" ${f_cfg})
     mapfile -t l_update_bash_cfg_user < <(jq -r ".l_update_bash_cfg_user[]" ${f_cfg})
   else
     exit 1
@@ -30,37 +31,32 @@ load_cfg() {
 }
 
 set_color() {
-  if [[ -n "$1" ]]; then
-    sed -i '/add by arashi bash.sh set_color/,/end by arashi bash.sh set_color/d' $1
-    cat >>$1 <<EOF
+  sed -i '/add by arashi bash.sh set_color/,/end by arashi bash.sh set_color/d' /etc/bash.bashrc
+  cat >>/etc/bash.bashrc <<EOF
 # add by arashi bash.sh set_color
 if [[ "\$TERM" == "xterm" ]]; then
     export TERM=xterm-256color
 fi
 # end by arashi bash.sh set_color
 EOF
-  fi
 }
 
 set_alias() {
-  if [[ -n "$1" ]]; then
-    cp -f "${d_cur}/bash_aliases.sh" $1
-    sed -i '/add by arashi bash.sh set_alias/,/end by arashi bash.sh set_alias/d' $1
-    cat >>$1 <<EOF
+  cp -f "${d_cur}/bash_aliases.sh" ${1}/.bashrc_aliases_arashi
+  sed -i '/add by arashi bash.sh set_alias/,/end by arashi bash.sh set_alias/d' ${1}/.bashrc
+  cat >>${1}/.bashrc <<EOF
 # add by arashi bash.sh set_alias
 if [[ -f ~/.bash_aliases_arashi ]]; then
     . ~/.bash_aliases_arashi
 fi
 # end by arashi bash.sh set_alias
 EOF
-  fi
 }
 
 set_ps1() {
-  if [[ -n "$1" ]]; then
-    sed -i '/add by arashi bash.sh set_ps1/,/end by arashi bash.sh set_ps1/d' $1
-    sed -i 's/unset color_prompt force_color_prompt/#unset color_prompt force_color_prompt/g' $1
-    cat >>$1 <<EOF
+  sed -i '/add by arashi bash.sh set_ps1/,/end by arashi bash.sh set_ps1/d' ${1}/.bashrc
+  sed -i 's/unset color_prompt force_color_prompt/#unset color_prompt force_color_prompt/g' ${1}/.bashrc
+  cat >>${1}/.bashrc <<EOF
 # add by arashi bash.sh set_ps1
 if [ "\$color_prompt" = yes ]; then
      PS1='\${debian_chroot:+(\$debian_chroot)}\[\033[01;32m\]\u\[\033[00m\]:\[\033[01;35m\]\H\[\033[00m\]:\[\033[01;36m\]\w\[\033[00m\]:\[\033[01;33m\]\$?\[\033[00m\]\n\$ '
@@ -70,7 +66,6 @@ fi
 unset color_prompt force_color_prompt
 # end by arashi bash.sh set_ps1
 EOF
-  fi
 }
 
 update_bash_cfg_user() {
@@ -89,9 +84,13 @@ update_bash_cfg_user() {
 main() {
   load_lib
   load_cfg
-  set_color /etc/bash.bashrc
-  set_alias /etc/skel/.bash_aliases_arashi
-  set_ps1 /etc/skel/.bashrc
+  check_lsb_support
+  if (($? != 0)); then
+    exit 1
+  fi
+  set_color
+  set_alias /etc/skel
+  set_ps1 /etc/skel
   update_bash_cfg_user
 }
 
