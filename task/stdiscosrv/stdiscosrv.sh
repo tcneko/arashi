@@ -10,8 +10,8 @@ export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 # variables
 d_cur="$(dirname ${BASH_SOURCE[0]})"
 f_lib="${d_cur}/../../lib/lib_arashi.sh"
-f_cfg="${d_cur}/syncthing.json"
-d_syncthing="/etc/syncthing"
+f_cfg="${d_cur}/stdiscosrv.json"
+d_stdiscosrv="/etc/stdiscosrv"
 
 # function
 load_lib() {
@@ -32,33 +32,32 @@ load_cfg() {
   fi
 }
 
-install_syncthing() {
-  dpkg -s syncthing &>/dev/null
+install_stdiscosrv() {
+  dpkg -s syncthing-discosrv &>/dev/null
   if (($? != 0)); then
     curl -s https://syncthing.net/release-key.txt | sudo apt-key add -
     echo "deb https://apt.syncthing.net/ syncthing stable" >/etc/apt/sources.list.d/syncthing.list
     apt -y update
-    apt -y install syncthing
+    apt -y install syncthing-discosrv
   fi
-  mkdir -p ${d_syncthing}
-  touch config.xml
-  chown -R s_syncthing: ${d_syncthing}
-  cp -f ${d_cur}/syncthing.service /lib/systemd/system/
+  mkdir -p ${d_stdiscosrv}
+  chown -R s_stdiscosrv: ${d_stdiscosrv}
+  cp -f ${d_cur}/stdiscosrv.service /lib/systemd/system/
   systemctl daemon-reload
-  systemctl stop syncthing.service
+  systemctl stop stdiscosrv.service
 }
 
 enable_serv() {
   if ((${b_enable_serv} == 0)); then
-    systemctl enable syncthing.service
+    systemctl enable stdiscosrv.service
   else
-    systemctl disable syncthing.service
+    systemctl disable stdiscosrv.service
   fi
 }
 
 start_serv() {
   if ((${b_start_serv} == 0)); then
-    systemctl start syncthing.service
+    systemctl start stdiscosrv.service
   fi
 }
 
@@ -69,7 +68,7 @@ main() {
   if (($? != 0)); then
     exit 1
   fi
-  install_syncthing
+  install_stdiscosrv
   enable_serv
   start_serv
 }

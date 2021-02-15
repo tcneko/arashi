@@ -1,0 +1,24 @@
+[Unit]
+Description=Syncthing Discovery Server
+After=network.target
+Documentation=man:stdiscosrv(1)
+
+[Service]
+User=s_stdiscosrv
+Group=s_stdiscosrv
+ExecStart=/usr/bin/stdiscosrv -listen=:5210
+Restart=on-failure
+
+WorkingDirectory=/etc/stdiscosrv
+ReadWritePaths=/etc/stdiscosrv
+ProtectSystem=strict
+PrivateTmp=true
+PrivateDevices=true
+ProtectHome=true
+SystemCallArchitectures=native
+MemoryDenyWriteExecute=true
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target
+Alias=syncthing-discosrv.service
