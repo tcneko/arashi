@@ -32,6 +32,11 @@ load_cfg() {
     for key in ${l_key[@]}; do
       a_nor_user_pass[${key}]=$(jq -r ".a_nor_user_pass.${key}" ${f_cfg})
     done
+    declare -gA a_nor_user_d_home
+    mapfile -t l_key < <(jq -r ".a_nor_user_d_home | keys_unsorted[]" ${f_cfg})
+    for key in ${l_key[@]}; do
+      a_nor_user_d_home[${key}]=$(jq -r ".a_nor_user_d_home.${key}" ${f_cfg})
+    done
   else
     exit 1
   fi
@@ -80,7 +85,12 @@ add_user_c() {
   groupadd -g ${id} ${user}
   check_func_return
   if [[ $2 == 'nor' ]]; then
-    useradd -u ${id} -g ${id} -s /bin/bash -m ${user}
+    d_home=${a_nor_user_d_home[$user]}
+    if [[ -n "${d_home}" ]]; then
+      useradd -u ${id} -g ${id} -s /bin/bash -m ${user} -d ${d_home}
+    else
+      useradd -u ${id} -g ${id} -s /bin/bash -m ${user}
+    fi
   elif [[ $2 == 'sys' ]]; then
     useradd -u ${id} -g ${id} -s /usr/sbin/nologin -M ${user}
   else

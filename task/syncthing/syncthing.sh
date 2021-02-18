@@ -41,7 +41,6 @@ install_syncthing() {
     apt -y install syncthing
   fi
   mkdir -p ${d_syncthing}
-  touch config.xml
   chown -R s_syncthing: ${d_syncthing}
   cp -f ${d_cur}/syncthing.service /lib/systemd/system/
   systemctl daemon-reload

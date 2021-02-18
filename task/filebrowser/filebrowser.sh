@@ -25,7 +25,6 @@ load_cfg() {
 install_filebrowser() {
   curl -fsSL https://filebrowser.org/get.sh | bash
   mkdir -p ${d_filebrowser}
-  touch ${d_filebrowser}/filebrowser.db
   chown -R s_filebrowser: ${d_filebrowser}
   cp -f ${d_cur}/filebrowser.service /lib/systemd/system/
 }

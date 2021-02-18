@@ -1,3 +1,9 @@
 {
-  "l_d_lt": ["/opt/git", "/opt/sh"]
+  "l_d_lt": [
+    "/opt/git",
+    "/opt/sh"
+  ],
+  "a_d_lt_owner": {
+    "/opt/sh": "root:root"
+  }
 }

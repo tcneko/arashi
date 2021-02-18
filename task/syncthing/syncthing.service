@@ -13,7 +13,7 @@ RestartForceExitStatus=3 4
 
 WorkingDirectory=/etc/syncthing
 ReadWritePaths=/etc/syncthing
-ProtectSystem=strict
+ProtectSystem=full
 PrivateTmp=true
 PrivateDevices=yes
 ProtectHome=true
