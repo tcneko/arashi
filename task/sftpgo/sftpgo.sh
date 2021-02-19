@@ -10,9 +10,12 @@ export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 # variables
 d_cur="$(dirname ${BASH_SOURCE[0]})"
 f_lib="${d_cur}/../../lib/lib_arashi.sh"
-f_cfg="${d_cur}/stdiscosrv.json"
-d_stdiscosrv="/etc/stdiscosrv"
-d_stdiscosrv_run="/var/lib/stdiscosrv"
+f_cfg="${d_cur}/sftpgo.json"
+d_sftpgo="/etc/sftpgo"
+d_sftpgo_run="/var/lib/sftpgo"
+d_pkg="/opt/pkg/sftpgo"
+f_pkg="${d_pkg}/sftpgo_2.0.2-1_amd64.deb"
+pkg_link="https://github.com/drakkan/sftpgo/releases/download/v2.0.2/sftpgo_2.0.2-1_amd64.deb"
 
 # function
 load_lib() {
@@ -33,35 +36,36 @@ load_cfg() {
   fi
 }
 
-install_stdiscosrv() {
-  dpkg -s syncthing-discosrv &>/dev/null
+install_sftpgo() {
+  dpkg -s sftpgo &>/dev/null
   if (($? != 0)); then
-    curl -s https://syncthing.net/release-key.txt | sudo apt-key add -
-    echo "deb https://apt.syncthing.net/ syncthing stable" >/etc/apt/sources.list.d/syncthing.list
-    apt -y update
-    apt -y install syncthing-discosrv
+    mkdir -p ${d_pkg}
+    curl -sLo ${f_pkg} ${pkg_link}
+    apt install ${f_pkg}
   fi
+  mkdir -p ${d_sftpgo} ${d_sftpgo_run}
 
-  mkdir -p ${d_stdiscosrv} ${d_stdiscosrv_run}
-  chown -R root: ${d_stdiscosrv}
-  chown -R s_stdiscosrv: ${d_stdiscosrv_run}
-  chmod 755 ${d_stdiscosrv} ${d_stdiscosrv_run}
+  chown root: ${d_sftpgo}
+  chmod 755 ${d_sftpgo}
 
-  systemctl disable stdiscosrv.service
-  systemctl stop stdiscosrv.service
-  cp -f ${d_cur}/stdiscosrv.service /lib/systemd/system/
+  chown s_sftpgo: ${d_sftpgo_run}
+  chmod 755 ${d_sftpgo_run}
+
+  systemctl disable sftpgo.service
+  systemctl stop sftpgo.service
+  cp -f ${d_cur}/sftpgo.service /lib/systemd/system/
   systemctl daemon-reload
 }
 
 enable_serv() {
   if ((${b_enable_serv} == 0)); then
-    systemctl enable stdiscosrv.service
+    systemctl enable sftpgo.service
   fi
 }
 
 start_serv() {
   if ((${b_start_serv} == 0)); then
-    systemctl start stdiscosrv.service
+    systemctl start sftpgo.service
   fi
 }
 
@@ -72,7 +76,7 @@ main() {
   if (($? != 0)); then
     exit 1
   fi
-  install_stdiscosrv
+  install_sftpgo
   enable_serv
   start_serv
 }

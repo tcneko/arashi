@@ -1,6 +1,7 @@
 {
   "l_d_lt": [
     "/opt/git",
+    "/opt/pkg",
     "/opt/sh"
   ],
   "a_d_lt_owner": {

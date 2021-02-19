@@ -42,16 +42,16 @@ install_syncthing() {
   fi
   mkdir -p ${d_syncthing}
   chown -R s_syncthing: ${d_syncthing}
+
+  systemctl stop syncthing.service
+  systemctl disable syncthing.service
   cp -f ${d_cur}/syncthing.service /lib/systemd/system/
   systemctl daemon-reload
-  systemctl stop syncthing.service
 }
 
 enable_serv() {
   if ((${b_enable_serv} == 0)); then
     systemctl enable syncthing.service
-  else
-    systemctl disable syncthing.service
   fi
 }
 

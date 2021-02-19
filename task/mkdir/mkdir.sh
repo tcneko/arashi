@@ -25,7 +25,7 @@ load_cfg() {
     declare -gA a_d_lt_owner
     mapfile -t l_key < <(jq -r ".a_d_lt_owner | keys_unsorted[]" ${f_cfg})
     for key in ${l_key[@]}; do
-      a_d_lt_owner[${key}]=$(jq -r ".a_d_lt_owner.${key}" ${f_cfg})
+      a_d_lt_owner[${key}]=$(jq -r ".a_d_lt_owner.\"${key}\"" ${f_cfg})
     done
   else
     exit 1

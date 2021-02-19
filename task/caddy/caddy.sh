@@ -12,6 +12,8 @@ d_cur="$(dirname ${BASH_SOURCE[0]})"
 f_lib="${d_cur}/../../lib/lib_arashi.sh"
 f_cfg="${d_cur}/caddy.json"
 d_caddy="/etc/caddy"
+d_caddy_run="/var/lib/caddy"
+f_env="/etc/default/caddy"
 
 # function
 load_lib() {
@@ -39,35 +41,32 @@ install_caddy() {
     apt -y update
     apt -y install caddy
   fi
-  mkdir -p ${d_caddy}
-  cp -f ${d_cur}/caddyenv ${d_caddy}/
-  touch ${d_caddy}/caddyfile
-  chown -R s_caddy: ${d_caddy}
-  cp -f ${d_cur}/caddy.service /lib/systemd/system/
-}
+  rm -f /etc/caddy/Caddyfile
 
-disable_def_serv() {
+  cp -f ${d_cur}/caddy_env ${f_env}
+
+  mkdir -p ${d_caddy} ${d_caddy_run}
+  chown -R root: ${d_caddy}
+  chown -R s_caddy: ${d_caddy_run}
+  chmod 755 ${d_caddy} ${d_caddy_run}
+
   systemctl stop caddy-api.service
   systemctl disable caddy-api.service
-}
-
-reload_sysd() {
+  systemctl stop caddy.service
+  systemctl disable caddy.service
+  cp -f ${d_cur}/caddy.service /lib/systemd/system/
   systemctl daemon-reload
 }
 
 enable_serv() {
   if ((${b_enable_serv} == 0)); then
     systemctl enable caddy.service
-  else
-    systemctl disable caddy.service
   fi
 }
 
 start_serv() {
   if ((${b_start_serv} == 0)); then
     systemctl start caddy.service
-  else
-    systemctl stop caddy.service
   fi
 }
 
@@ -79,8 +78,6 @@ main() {
     exit 1
   fi
   install_caddy
-  disable_def_serv
-  reload_sysd
   enable_serv
   start_serv
 }

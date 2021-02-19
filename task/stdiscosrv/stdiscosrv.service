@@ -9,8 +9,8 @@ Group=s_stdiscosrv
 ExecStart=/usr/bin/stdiscosrv -listen=:5210
 Restart=on-failure
 
-WorkingDirectory=/etc/stdiscosrv
-ReadWritePaths=/etc/stdiscosrv
+WorkingDirectory=/var/lib/stdiscosrv
+ReadWritePaths=/var/lib/stdiscosrv
 ProtectSystem=strict
 PrivateTmp=true
 PrivateDevices=true

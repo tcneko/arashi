@@ -8,11 +8,11 @@ Restart=on-abnormal
 
 User=s_filebrowser
 Group=s_filebrowser
-ExecStart=/usr/local/bin/filebrowser -c /etc/filebrowser -d /etc/filebrowser/filebrowser.db -r /opt/sync
+ExecStart=/usr/local/bin/filebrowser -d /var/lib/filebrowser/filebrowser.db -r /opt/sync
 Restart=on-failure
 
-WorkingDirectory=/etc/filebrowser
-ReadWritePaths=/etc/filebrowser
+WorkingDirectory=/var/lib/filebrowser
+ReadWritePaths=/var/lib/filebrowser
 ProtectSystem=full
 PrivateTmp=true
 PrivateDevices=true

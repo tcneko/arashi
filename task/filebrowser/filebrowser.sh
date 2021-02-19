@@ -11,6 +11,7 @@ export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 d_cur="$(dirname ${BASH_SOURCE[0]})"
 f_cfg="${d_cur}/filebrowser.json"
 d_filebrowser="/etc/filebrowser"
+d_filebrowser_run="/var/lib/filebrowser"
 
 # function
 load_cfg() {
@@ -24,35 +25,33 @@ load_cfg() {
 
 install_filebrowser() {
   curl -fsSL https://filebrowser.org/get.sh | bash
-  mkdir -p ${d_filebrowser}
-  chown -R s_filebrowser: ${d_filebrowser}
-  cp -f ${d_cur}/filebrowser.service /lib/systemd/system/
-}
 
-reload_sysd() {
+  mkdir -p ${d_filebrowser} ${d_filebrowser_run}
+  chown -R root: ${d_filebrowser}
+  chown -R s_filebrowser: ${d_filebrowser_run}
+  chmod 755 ${d_filebrowser} ${d_filebrowser_run}
+
+  systemctl stop filebrowser.service
+  systemctl disable filebrowser.service
+  cp -f ${d_cur}/filebrowser.service /lib/systemd/system/
   systemctl daemon-reload
 }
 
 enable_serv() {
   if ((${b_enable_serv} == 0)); then
     systemctl enable filebrowser.service
-  else
-    systemctl disable filebrowser.service
   fi
 }
 
 start_serv() {
   if ((${b_start_serv} == 0)); then
     systemctl start filebrowser.service
-  else
-    systemctl stop filebrowser.service
   fi
 }
 
 main() {
   load_cfg
   install_filebrowser
-  reload_sysd
   enable_serv
   start_serv
 }
