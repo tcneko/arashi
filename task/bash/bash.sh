@@ -42,7 +42,7 @@ EOF
 }
 
 set_alias() {
-  cp -f "${d_cur}/bash_aliases.sh" ${1}/.bashrc_aliases_arashi
+  cp -f "${d_cur}/bash_aliases.sh" ${1}/.bash_aliases_arashi
   sed -i '/add by arashi bash.sh set_alias/,/end by arashi bash.sh set_alias/d' ${1}/.bashrc
   cat >>${1}/.bashrc <<EOF
 # add by arashi bash.sh set_alias
