@@ -93,7 +93,7 @@ EOF
 
 add_pubkey() {
   for pubkey_user in ${l_pubkey_user[@]}; do
-    if [[ -f "${d_cur}/${pubkey_user}.pub" && ! -f "/home/${pubkey_user}/.ssh/authorized_keys" ]]; then
+    if [[ -f "${d_cur}/${pubkey_user}.pub" ]]; then
       mkdir -p "/home/${pubkey_user}/.ssh"
       chown "${pubkey_user}:" "/home/${pubkey_user}/.ssh"
       chmod 700 "/home/${pubkey_user}/.ssh"
@@ -102,6 +102,7 @@ add_pubkey() {
       chmod 600 "/home/${pubkey_user}/.ssh/authorized_keys"
     else
       echo_warning "Skip add ssh public key for user ${pubkey_user}"
+      sh_return=1
     fi
   done
 }

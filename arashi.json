@@ -2,9 +2,9 @@
   "l_task": [
     "timezone",
     "sysctl",
+    "user",
     "mkdir",
     "apt",
-    "user",
     "bash",
     "vim",
     "tmux",
