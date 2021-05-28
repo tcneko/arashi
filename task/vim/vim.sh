@@ -39,12 +39,15 @@ update_git_repo() {
 }
 
 update_vim_cfg() {
-  vimrc_my_config='" basic
+  vimrc_my_config="\" basic
 set foldcolumn=0
 
-" auto pairs
+\" auto pairs
 let g:AutoPairs={}
-'
+
+\" snipmate
+let g:snipMate = { 'snippet_version' : 1 }
+"
   echo "${vimrc_my_config}" >${d_git}/vim_runtime/my_configs.vim
 }
 
