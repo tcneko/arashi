@@ -73,10 +73,6 @@ start_serv() {
 main() {
   load_lib
   load_cfg
-  check_lsb_support
-  if (($? != 0)); then
-    exit 1
-  fi
   install_caddy
   enable_serv
   start_serv

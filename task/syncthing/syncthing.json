@@ -1,5 +1,4 @@
 {
-  "l_lsb_support": ["Ubuntu 18.04", "Ubuntu 20.04"],
   "b_enable_serv": 1,
   "b_start_serv": 1
 }

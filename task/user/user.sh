@@ -57,9 +57,9 @@ check_func_return_r() {
 add_user_c() {
   id_add=$(echo -n ${user} | md5sum | sed 's/[^0-9]//g;s/.*\(...\)$/\1/')
   if [[ $2 == 'nor' ]]; then
-    id=$(echo "${id_add} + ${base_id_nor}" | bc)
+    id=$((${id_add} + ${base_id_nor}))
   elif [[ $2 == 'sys' ]]; then
-    id=$(echo "${id_add} + ${base_id_sys}" | bc)
+    id=$((${id_add} + ${base_id_sys}))
   else
     return 1
   fi

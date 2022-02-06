@@ -66,10 +66,6 @@ apt_remove() {
 main() {
   load_lib
   load_cfg
-  check_lsb_support
-  if (($? != 0)); then
-    exit 1
-  fi
   sh_return=0
   apt_update
   apt_upgrade
