@@ -24,7 +24,6 @@ load_lib() {
 
 load_cfg() {
   if [[ -r ${f_cfg} ]]; then
-    mapfile -t l_lsb_support < <(jq -r ".l_lsb_support[]" ${f_cfg})
     b_enable_serv=$(jq -r ".b_enable_serv" ${f_cfg})
     b_start_serv=$(jq -r ".b_start_serv" ${f_cfg})
   else

@@ -23,7 +23,6 @@ load_lib() {
 
 load_cfg() {
   if [[ -r ${f_cfg} ]]; then
-    mapfile -t l_lsb_support < <(jq -r ".l_lsb_support[]" ${f_cfg})
     b_apt_upgrade=$(jq -r ".b_apt_upgrade" ${f_cfg})
     mapfile -t l_apt_install < <(jq -r ".l_apt_install[]" ${f_cfg})
     mapfile -t l_apt_disable < <(jq -r ".l_apt_disable[]" ${f_cfg})

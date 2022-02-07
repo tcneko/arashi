@@ -23,7 +23,6 @@ load_lib() {
 
 load_cfg() {
   if [[ -r ${f_cfg} ]]; then
-    mapfile -t l_lsb_support < <(jq -r ".l_lsb_support[]" ${f_cfg})
     mapfile -t l_update_bash_cfg_user < <(jq -r ".l_update_bash_cfg_user[]" ${f_cfg})
   else
     exit 1
