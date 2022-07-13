@@ -1,0 +1,5 @@
+{
+  "update_pip": 0,
+  "update_package": 0,
+  "package_list": ["typer"]
+}

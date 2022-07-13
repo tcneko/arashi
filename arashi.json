@@ -5,6 +5,7 @@
     "user",
     "mkdir",
     "apt",
+    "pip",
     "bash",
     "vim",
     "tmux",
