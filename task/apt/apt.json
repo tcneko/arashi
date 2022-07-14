@@ -7,7 +7,8 @@
     "net-tools",
     "dos2unix",
     "zip",
-    "subnetcalc"
+    "subnetcalc",
+    "docker.io"
   ],
   "l_apt_disable": [],
   "l_apt_remove": []
