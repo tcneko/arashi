@@ -35,16 +35,16 @@ load_cfg() {
 
 update_pip() {
   if ((${update_pip} == 0)); then
-    pip install --upgrade pip
+    pip3 install --upgrade pip
     update_return_code $?
   fi
 }
 
 install_package() {
   if ((${update_package} == 0)); then
-    pip install ${package_list[@]}
+    pip3 install ${package_list[@]}
   else
-    pip install --upgrade ${package_list[@]}
+    pip3 install --upgrade ${package_list[@]}
   fi
   update_return_code $?
 }
