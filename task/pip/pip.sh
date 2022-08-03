@@ -35,16 +35,16 @@ load_cfg() {
 
 update_pip() {
   if ((${update_pip} == 0)); then
-    pip3 install --upgrade pip
+    python3 -m pip install --no-cache-dir --upgrade pip
     update_return_code $?
   fi
 }
 
 install_package() {
   if ((${update_package} == 0)); then
-    pip3 install ${package_list[@]}
+    python3 -m pip install --no-cache-dir ${package_list[@]}
   else
-    pip3 install --upgrade ${package_list[@]}
+    python3 -m pip install --no-cache-dir --upgrade ${package_list[@]}
   fi
   update_return_code $?
 }
