@@ -33,32 +33,32 @@ load_cfg() {
 }
 
 apt_update() {
-  apt update
+  apt-get update
   check_sh_retrun
 }
 
 apt_upgrade() {
   if ((${b_apt_upgrade} == 0)); then
-    apt upgrade -y
+    apt-get upgrade -y
     check_sh_retrun
   fi
 }
 
 apt_install() {
   echo ${l_apt_install[@]}
-  apt install -y ${l_apt_install[@]}
+  apt-get install -y ${l_apt_install[@]}
   check_sh_retrun
 }
 
 apt_diable() {
   for apt_diable in ${l_apt_diable[@]}; do
-    apt disable -y ${apt_diable}
+    apt-get disable -y ${apt_diable}
     check_sh_retrun
   done
 }
 
 apt_remove() {
-  apt remove -y ${l_apt_remove[@]}
+  apt-get remove -y ${l_apt_remove[@]}
   check_sh_retrun
 }
 

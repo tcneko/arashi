@@ -70,7 +70,7 @@ main() {
     return 1
   fi
   stop_systemd_service
-  update_docker_cfg
+  install_docker_cfg
   start_systemd_service
   enable_systemd_service
 }

@@ -1,5 +1,6 @@
 {
   "iptables": false,
   "bridge": "none",
-  "ipv6": true
+  "ipv6": true,
+  "log-driver": "journald"
 }
