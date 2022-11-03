@@ -9,6 +9,6 @@
     "foo": "/home/bar"
   },
   "a_nor_user_pass": {
-    "foo": "bar"
+    "foo": "$6$BY/e.aRmcz11kYkB$0i9aVB.gb/W2R9eKBH7Qclou3X61NKAeO9GeX5Z4gZHS9NtLdxNt78oMCwdmNwyC75JNIwL202PBjSeLHr/9l/"
   }
 }

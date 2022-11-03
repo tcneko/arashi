@@ -117,7 +117,7 @@ update_pass() {
   for user in ${!a_nor_user_pass[@]}; do
     pass=${a_nor_user_pass[${user}]}
     if [[ -n "${pass}" ]]; then
-      echo "${user}:${pass}" | chpasswd
+      echo "${user}:${pass}" | chpasswd -e
       check_sh_retrun
     fi
   done
