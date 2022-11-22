@@ -34,8 +34,8 @@ load_cfg() {
 install_syncthing() {
   dpkg -s syncthing &>/dev/null
   if (($? != 0)); then
-    curl -s https://syncthing.net/release-key.txt | sudo apt-key add -
-    echo "deb https://apt.syncthing.net/ syncthing stable" >/etc/apt/sources.list.d/syncthing.list
+    curl -o /etc/apt/trusted.gpg.d/syncthing-archive-keyring.gpg https://syncthing.net/release-key.gpg
+    echo "deb [signed-by=/etc/apt/trusted.gpg.d/syncthing-archive-keyring.gpg] https://apt.syncthing.net/ syncthing stable" >/etc/apt/sources.list.d/syncthing.list
     apt -y update
     apt -y install syncthing
   fi
